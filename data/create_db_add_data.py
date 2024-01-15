@@ -56,7 +56,9 @@ def create_db():
 
     # 6. Import data from CSV to database table using pandas
     # Read the noc_regions data to a pandas dataframe
-    na_values = ["", ]
+    na_values = [
+        "",
+    ]
     noc_file = Path(__file__).parent.joinpath("noc_regions.csv")
     noc_regions_df = pd.read_csv(noc_file, keep_default_na=False, na_values=na_values)
 
@@ -69,11 +71,11 @@ def create_db():
     noc_regions_df.to_sql("region", connection, if_exists="append", index=False)
     # For the event table we want the pandas index, but it needs to start from 1 and not 0
     paralympics_df.index += 1
-    paralympics_df.to_sql("event", connection, if_exists="append", index_label='id')
+    paralympics_df.to_sql("event", connection, if_exists="append", index_label="id")
 
     # 8. Close the database connection
     connection.close()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     create_db()
